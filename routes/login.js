@@ -27,7 +27,7 @@ module.exports = (app, collections) => {
                         else {
                             if (!result) res.send({msg: "Wrong password"})
                             else {
-                                jwt.sign({email}, process.env.JWT_SECRET_KEY, (err, token) => {
+                                jwt.sign({email}, process.env.JWT_SECRET_KEY, {expiresIn: '1h' },(err, token) => {
                                     if (err) res.send(err);
                                     else res.send({token})
                                 });
