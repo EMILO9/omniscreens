@@ -21,13 +21,13 @@ module.exports = (app, collections) => {
             else {
                 if (!user.verified) res.status(403).send({msg: "You need to verify your email address before you can login"});
                 else {
-                    const {email} = user;
+                    const {_id, email, verified, createdAt} = user;
                     bcrypt.compare(password, user.password, (err, result) => {
                         if (err) res.send(err)
                         else {
                             if (!result) res.send({msg: "Wrong password"})
                             else {
-                                jwt.sign({email}, process.env.JWT_SECRET_KEY, {expiresIn: '1h' },(err, token) => {
+                                jwt.sign({_id, email, verified, createdAt}, process.env.JWT_SECRET_KEY,{ expiresIn: '1h' },(err, token) => {
                                     if (err) res.send(err);
                                     else res.send({token})
                                 });

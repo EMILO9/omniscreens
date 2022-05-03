@@ -9,8 +9,6 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 
-app.set('view engine', 'ejs');
-
 mongoClient.connect(process.env.MONGO_CONNECTION_STRING, (err, client) => {
     const db = client.db('db');
     const collections = {
