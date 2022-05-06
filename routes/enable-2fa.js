@@ -9,8 +9,10 @@ module.exports = (app, collections) => {
         .then(user => {
             if (user) res.send("User has already enabled 2FA")
             else {
-                const tempSecret = speakeasy.generateSecret();
-                res.send(tempSecret)
+                const secret = speakeasy.generateSecret();
+                users.updateOne({email}, { $set: { twoFactor: secret} })
+                .then(r => res.send({secret}))
+                .catch(err => res.send(err))
             }
         })
         .catch(err => res.send(err))
