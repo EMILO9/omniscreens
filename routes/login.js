@@ -28,7 +28,7 @@ module.exports = (app, collections) => {
                         else {
                             if (!result) res.send({msg: "Wrong password"})
                             else {
-                                jwt.sign({_id, email, verified, createdAt}, process.env.JWT_SECRET_KEY,{ expiresIn: '1h' },(err, token) => {
+                                jwt.sign({_id, email, verified, createdAt}, process.env.JWT_SECRET_KEY,(err, token) => {
                                     if (err) res.send(err);
                                     else {
                                         users.findOne({email, twoFactor:{$exists:true}})
